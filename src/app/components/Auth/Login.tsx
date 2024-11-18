@@ -7,7 +7,12 @@ import AuthContext from '../../context/AuthContext'
 import { useRouter } from 'next/navigation'
 
 export default function AuthForm() {
-  const [form, setForm] = useState({ first_name: '',email: '', username: '', password: '' })
+  const [form, setForm] = useState({ 
+    first_name: '',
+    email: '', 
+    username: '', 
+    password: '' 
+  })
   const [isLogin, setIsLogin] = useState(true)
   const [error, setError] = useState('')
   const authContext = useContext(AuthContext)
@@ -27,9 +32,11 @@ export default function AuthForm() {
     e.preventDefault()
     try {
       if (isLogin) {
+        // Only pass username and password for login
         await login(form.username, form.password)
         router.push('/videos')
       } else {
+        // Pass all fields for registration
         await register(form.first_name, form.email, form.username, form.password)
         router.push('/videos')
       }
@@ -76,37 +83,39 @@ export default function AuthForm() {
             </motion.div>
           )}
           {!isLogin && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <input
-                type="text"
-                name="first_name"
-                placeholder="First Name"
-                value={form.first_name}
+            <>
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <input
+                  type="text"
+                  name="first_name"
+                  placeholder="First Name"
+                  value={form.first_name}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 mb-4 text-gray-700 border border-blue-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-300"
+                  required
+                />
+              </motion.div>
+              <input 
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={form.email}
                 onChange={handleChange}
                 className="w-full px-3 py-2 mb-4 text-gray-700 border border-blue-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-300"
                 required
               />
-            </motion.div>
+            </>
           )}
           <input
             type="text"
             name="username"
             placeholder="Username"
             value={form.username}
-            onChange={handleChange}
-            className="w-full px-3 py-2 mb-4 text-gray-700 border border-blue-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-300"
-            required
-          />
-          <input 
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={form.email}
             onChange={handleChange}
             className="w-full px-3 py-2 mb-4 text-gray-700 border border-blue-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-300"
             required
