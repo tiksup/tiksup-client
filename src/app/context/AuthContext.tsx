@@ -8,7 +8,7 @@ import { AxiosError } from 'axios';
 interface AuthContextProps {
   user: { username: string } | null;
   login: (username: string, password: string) => Promise<void>;
-  register: (first_name: string, username: string, password: string) => Promise<void>;
+  register: (first_name: string, email: string, username: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -43,10 +43,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const register = async (first_name: string, username: string, password: string) => {
+  const register = async (first_name: string, email: string, username: string, password: string) => {
     try {
       const res = await api.post('/auth/register', {
         first_name,
+        email,
         username,
         password,
       });

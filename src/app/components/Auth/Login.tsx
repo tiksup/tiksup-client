@@ -7,7 +7,7 @@ import AuthContext from '../../context/AuthContext'
 import { useRouter } from 'next/navigation'
 
 export default function AuthForm() {
-  const [form, setForm] = useState({ first_name: '', username: '', password: '' })
+  const [form, setForm] = useState({ first_name: '',email: '', username: '', password: '' })
   const [isLogin, setIsLogin] = useState(true)
   const [error, setError] = useState('')
   const authContext = useContext(AuthContext)
@@ -30,7 +30,7 @@ export default function AuthForm() {
         await login(form.username, form.password)
         router.push('/videos')
       } else {
-        await register(form.first_name, form.username, form.password)
+        await register(form.first_name, form.email, form.username, form.password)
         router.push('/videos')
       }
     } catch (error) {

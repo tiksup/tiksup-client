@@ -4,19 +4,9 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useVideoContext } from '../../context/VideoContext';
 import { Heart, MessageCircle, Share2, Play } from 'lucide-react';
+import { VideoType } from '../lib/interface';
 
-interface VideoItemProps {
-  video: {
-    id: string;
-    url: string;
-    title: string;
-    protagonist: string;
-    director: string;
-    genre: string[];
-  };
-}
-
-const VideoItem = ({ video }: VideoItemProps) => {
+const VideoItem = ({ video }: { video: VideoType }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const { ref, inView } = useInView({
     threshold: 0.5,
