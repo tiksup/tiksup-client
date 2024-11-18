@@ -5,7 +5,13 @@ const nextConfig = {
     GATEWAY_URL: process.env.GATEWAY_URL,
   },
   images: {
-    domains: ['gqldqjebnxaxmslrgqwf.supabase.co'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'gqldqjebnxaxmslrgqwf.supabase.co',
+        pathname: '**',
+      },
+    ],
   },
 };
 
