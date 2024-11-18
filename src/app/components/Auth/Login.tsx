@@ -102,6 +102,15 @@ export default function AuthForm() {
             className="w-full px-3 py-2 mb-4 text-gray-700 border border-blue-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-300"
             required
           />
+          <input 
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            className="w-full px-3 py-2 mb-4 text-gray-700 border border-blue-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-300"
+            required
+          />
           <input
             type="password"
             name="password"
