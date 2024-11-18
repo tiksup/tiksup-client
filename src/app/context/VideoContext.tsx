@@ -2,6 +2,7 @@
 
 import { createContext, useState, ReactNode, useContext } from 'react';
 import api from '../client/apiClient';
+import { AxiosError } from 'axios';
 
 type VideoType = {
   id: string;
@@ -32,6 +33,7 @@ export const VideoProvider = ({ children }: VideoProviderProps) => {
   const getVideos = async (append = false) => {
     try {
       const res = await api.get('/movies');
+      console.log(res.data)
       setVideos((prevVideos) => append ? [...prevVideos, ...res.data.movies] : res.data.movies);
     } catch (error) {
       console.error('Error fetching videos:', error);
@@ -44,13 +46,14 @@ export const VideoProvider = ({ children }: VideoProviderProps) => {
       movie_id: video.id,
       watching_time: roundedWatchingTime,
       watching_repeat: watchingRepeat,
-      data: {
+      interactions: {
         genre: video.genre,
         protagonist: video.protagonist,
         director: video.director,
       },
-      next: videosWatched >= 4,
+      next: videosWatched >= 10,
     };
+    console.log(data)
     try {
       const res = await api.post('/stream/sendmoviedata', data, {
         headers: {
@@ -60,13 +63,13 @@ export const VideoProvider = ({ children }: VideoProviderProps) => {
       });
       setVideosWatched((prev) => prev + 1);
       console.log(`Datos enviados con éxito ${res.data.message}`);
-      if (videosWatched >= 4) {
+      if (videosWatched >= 10) {
         await getVideos(true);
         setVideosWatched(0);  
         console.log('Fetching more movies');
       }
     } catch (error) {
-      console.error('Error sending video data:', error);
+      console.error('Error sending video data:', (error as AxiosError).response?.data);
     }
   };
 

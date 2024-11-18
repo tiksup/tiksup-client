@@ -29,8 +29,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         password,
       });
       const data = res.data;
-      if (data.access_token) {
-        localStorage.setItem('token', data.access_token);
+      console.log(data)
+      if (data.token) {
+        localStorage.setItem('token', data.token);
         setUser({ username });
         router.push('/videos');
       }
