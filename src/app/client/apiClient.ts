@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: process.env.GATEWAY_URL || 'http://gateway:3000',
+    baseURL: process.env.NEXT_PUBLIC_GATEWAY_URL || 'http://gateway:3000',
 });
 
 api.interceptors.request.use(

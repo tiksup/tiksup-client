@@ -1,15 +1,20 @@
-FROM node:22-alpine3.19
+FROM node:22-alpine3.19 as build
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci
 
 COPY . .
 
 RUN npm run build
 
-EXPOSE 3000
+FROM node:22-alpine3.19
 
-ENTRYPOINT ["npm", "start"]
+WORKDIR /app
+
+COPY --from=build /app/.next .
+COPY --from=build /app/start.js .
+
+ENTRYPOINT ["node", "start.js"]
